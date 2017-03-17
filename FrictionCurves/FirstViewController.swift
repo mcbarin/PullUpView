@@ -24,8 +24,8 @@ class FirstViewController: UIViewController {
         addVerticalLine()
         
     }
-    @IBAction func viewDragged(sender: UIPanGestureRecognizer) {
-        let xPosition = sender.locationInView(view).x
+    @IBAction func viewDragged(_ sender: UIPanGestureRecognizer) {
+        let xPosition = sender.location(in: view).x
         movingViewLeadingConstraint.constant = linearConstraintValueForXPosition(xPosition)
         
         if (hasExceededVerticalLine(xPosition)) {
@@ -33,7 +33,7 @@ class FirstViewController: UIViewController {
             middleViewLeadingConstraint.constant = lognConstraintValueForXPosition(xPosition)
             bottomLeadingConstraint.constant = powConstraintValueForXPosition(xPosition)
             
-            if(sender.state == UIGestureRecognizerState.Ended ){
+            if(sender.state == UIGestureRecognizerState.ended ){
                 movingViewLeadingConstraint.constant = finalConstraintValue()
                 topViewLeadingConstraint.constant = finalConstraintValue()
                 middleViewLeadingConstraint.constant = finalConstraintValue()
@@ -48,19 +48,19 @@ class FirstViewController: UIViewController {
     }
 
 
-    func linearConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
-        return xPosition - CGRectGetWidth(movingView.frame)/2
+    func linearConstraintValueForXPosition(_ xPosition : CGFloat) -> CGFloat {
+        return xPosition - movingView.frame.width/2
     }
-    func sqrtConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+    func sqrtConstraintValueForXPosition(_ xPosition : CGFloat) -> CGFloat {
         let linearValue = linearConstraintValueForXPosition(xPosition)
         return finalConstraintValue() + sqrt(linearValue - finalConstraintValue())
     }
-    func powConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+    func powConstraintValueForXPosition(_ xPosition : CGFloat) -> CGFloat {
         let linearValue = linearConstraintValueForXPosition(xPosition)
         let powValue = pow(linearValue/finalConstraintValue(), 4.0)
         return linearValue - powValue
     }
-    func lognConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+    func lognConstraintValueForXPosition(_ xPosition : CGFloat) -> CGFloat {
         let linearValue = linearConstraintValueForXPosition(xPosition)
         return finalConstraintValue() * (1 + log10(linearValue/finalConstraintValue()))
     }
@@ -69,17 +69,17 @@ class FirstViewController: UIViewController {
 //Helping methods
     func addVerticalLine() {
         let lineThickness : CGFloat = 2.0;
-        let lineFrame = CGRectMake(horizontalLimit - lineThickness/2, 0, lineThickness, CGRectGetHeight(view.frame))
-        var verticalLineView : UIView = UIView (frame: lineFrame)
-        verticalLineView.backgroundColor = UIColor.redColor()
+        let lineFrame = CGRect(x: horizontalLimit - lineThickness/2, y: 0, width: lineThickness, height: view.frame.height)
+        let verticalLineView : UIView = UIView (frame: lineFrame)
+        verticalLineView.backgroundColor = UIColor.red
         view.addSubview(verticalLineView)
     }
     
     func finalConstraintValue() -> CGFloat {
-        let viewWidth = CGRectGetWidth(movingView.frame)
+        let viewWidth = movingView.frame.width
         return horizontalLimit - viewWidth/2
     }
-    func hasExceededVerticalLine(xPosition : CGFloat) -> Bool {
+    func hasExceededVerticalLine(_ xPosition : CGFloat) -> Bool {
         return xPosition > horizontalLimit
     }
     
