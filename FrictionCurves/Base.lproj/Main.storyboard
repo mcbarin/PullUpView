@@ -153,6 +153,9 @@
                                     <constraint firstItem="cSM-RB-tFZ" firstAttribute="top" secondItem="UY1-NE-sVZ" secondAttribute="top" constant="20" id="ZwX-0k-UPD"/>
                                     <constraint firstItem="cSM-RB-tFZ" firstAttribute="top" secondItem="UY1-NE-sVZ" secondAttribute="top" constant="8" id="wGs-xD-1lq"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="m0G-g1-Mtr" appends="YES" id="gxR-ue-TM4"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -170,6 +173,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="m0G-g1-Mtr">
+                    <connections>
+                        <action selector="viewDragged:" destination="8rJ-Kc-sve" id="QOp-89-aaH"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="434.93253373313348"/>
         </scene>
